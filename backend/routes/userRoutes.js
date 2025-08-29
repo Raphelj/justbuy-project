@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser,loginUser,logoutUser,getAllUsers,getCurrentUserProfile,updateCurrentUserProfile } from "../controllers/userController.js";
+import { createUser,loginUser,logoutUser,getAllUsers,getCurrentUserProfile,updateCurrentUserProfile,deleteUserById,getUserById } from "../controllers/userController.js";
 import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -11,4 +11,8 @@ router.post("/logout",logoutUser);
 router.get("/profile",authenticate,getCurrentUserProfile);
 router.put("/profile",authenticate,updateCurrentUserProfile);
 
+//Admin Routes
+
+router.delete("/:id",authenticate,authorizeAdmin,deleteUserById)
+router.get("/:id",authenticate,authorizeAdmin,getUserById)
 export default router;
