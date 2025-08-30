@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser,loginUser,logoutUser,getAllUsers,getCurrentUserProfile,updateCurrentUserProfile,deleteUserById,getUserById } from "../controllers/userController.js";
+import { createUser,loginUser,logoutUser,getAllUsers,getCurrentUserProfile,updateCurrentUserProfile,deleteUserById,getUserById,updateUserById } from "../controllers/userController.js";
 import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -15,4 +15,6 @@ router.put("/profile",authenticate,updateCurrentUserProfile);
 
 router.delete("/:id",authenticate,authorizeAdmin,deleteUserById)
 router.get("/:id",authenticate,authorizeAdmin,getUserById)
+router.put("/:id",authenticate,authorizeAdmin,updateUserById)
+
 export default router;
