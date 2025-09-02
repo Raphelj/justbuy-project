@@ -14,7 +14,7 @@ router.get("/new", fetchNewProducts);
 router.put("/:id", authenticate, authorizeAdmin, formidable(), updateProductDetails);
 router.delete("/:id", authenticate, authorizeAdmin, removeProduct);
 router.get("/:id", fetchProductById);
-router.post("/:id/reviews", authenticate, authorizeAdmin, checkId, addProductReview);
+router.post("/:id/reviews", authenticate, checkId, addProductReview);
 
 
 export default router;
