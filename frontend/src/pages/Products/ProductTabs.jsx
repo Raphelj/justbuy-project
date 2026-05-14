@@ -16,7 +16,6 @@ const ProductTabs = ({
   product,
 }) => {
   const { data, isLoading } = useGetTopProductsQuery();
-
   const [activeTab, setActiveTab] = useState(1);
 
   if (isLoading) {
@@ -28,51 +27,45 @@ const ProductTabs = ({
   };
 
   return (
-    <div className="flex flex-col md:flex-row">
-      <section className="mr-[5rem]">
-        <div
-          className={`flex-1 p-4 cursor-pointer text-lg ${
-            activeTab === 1 ? "font-bold" : ""
-          }`}
-          onClick={() => handleTabClick(1)}
-        >
-          Write Your Review
-        </div>
-        <div
-          className={`flex-1 p-4 cursor-pointer text-lg ${
-            activeTab === 2 ? "font-bold" : ""
-          }`}
-          onClick={() => handleTabClick(2)}
-        >
-          All Reviews
-        </div>
-        <div
-          className={`flex-1 p-4 cursor-pointer text-lg ${
-            activeTab === 3 ? "font-bold" : ""
-          }`}
-          onClick={() => handleTabClick(3)}
-        >
-          Related Products
-        </div>
+    <div className="flex flex-col md:flex-row text-gold bg-black min-h-screen p-6">
+      {/* Sidebar Tabs */}
+      <section className="mr-[5rem] border-r border-gold/40">
+        {["Write Your Review", "All Reviews", "Related Products"].map(
+          (tab, index) => (
+            <div
+              key={index}
+              className={`flex-1 p-4 cursor-pointer text-lg transition-all duration-200 ${
+                activeTab === index + 1
+                  ? "font-bold text-gold border-b-2 border-gold"
+                  : "text-gray-400 hover:text-gold/70"
+              }`}
+              onClick={() => handleTabClick(index + 1)}
+            >
+              {tab}
+            </div>
+          )
+        )}
       </section>
 
-      {/* Second Part */}
-      <section>
+      {/* Write Review Section */}
+      <section className="flex-1">
         {activeTab === 1 && (
-          <div className="mt-4">
+          <div className="mt-4 text-gold">
             {userInfo ? (
-              <form onSubmit={submitHandler}>
-                <div className="my-2">
+              <form
+                onSubmit={submitHandler}
+                className="backdrop-blur-md bg-white/5 border border-gold/30 rounded-2xl p-6 shadow-lg"
+              >
+                <div className="my-4">
                   <label htmlFor="rating" className="block text-xl mb-2">
                     Rating
                   </label>
-
                   <select
                     id="rating"
                     required
                     value={rating}
                     onChange={(e) => setRating(e.target.value)}
-                    className="p-2 border rounded-lg xl:w-[40rem] text-black"
+                    className="p-2 border border-gold/30 rounded-lg xl:w-[40rem] text-black focus:ring-2 focus:ring-gold"
                   >
                     <option value="">Select</option>
                     <option value="1">Inferior</option>
@@ -83,56 +76,65 @@ const ProductTabs = ({
                   </select>
                 </div>
 
-                <div className="my-2">
+                <div className="my-4">
                   <label htmlFor="comment" className="block text-xl mb-2">
                     Comment
                   </label>
-
                   <textarea
                     id="comment"
                     rows="3"
                     required
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="p-2 border rounded-lg xl:w-[40rem] text-black"
+                    className="p-3 border border-gold/30 rounded-lg xl:w-[40rem] text-black focus:ring-2 focus:ring-gold"
                   ></textarea>
                 </div>
+
                 <button
                   type="submit"
                   disabled={loadingProductReview}
-                  className="bg-pink-600 text-white py-2 px-4 rounded-lg"
+                  className="bg-gradient-to-r from-yellow-700 to-yellow-500 text-black font-semibold py-2 px-6 rounded-full shadow-md hover:shadow-gold/50 hover:scale-105 transition-all"
                 >
                   Submit
                 </button>
               </form>
             ) : (
               <p>
-                Please <Link to="/login">sign in</Link> to write a review
+                Please{" "}
+                <Link to="/login" className="text-gold underline">
+                  sign in
+                </Link>{" "}
+                to write a review
               </p>
             )}
           </div>
         )}
       </section>
 
-      <section>
+      {/* All Reviews Section */}
+      <section className="flex-1">
         {activeTab === 2 && (
           <>
-            <div>{product.reviews.length === 0 && <p>No Reviews</p>}</div>
+            <div>
+              {product.reviews.length === 0 && (
+                <p className="text-gray-400">No Reviews</p>
+              )}
+            </div>
 
             <div>
               {product.reviews.map((review) => (
                 <div
                   key={review._id}
-                  className="bg-[#ffffff] p-4 rounded-lg xl:ml-[2rem] sm:ml-[0rem] xl:w-[50rem] sm:w-[24rem] mb-5"
+                  className="backdrop-blur-md bg-white/5 border border-gold/30 p-4 rounded-xl xl:ml-[2rem] sm:ml-[0rem] xl:w-[50rem] sm:w-[24rem] mb-5 text-gold"
                 >
-                  <div className="flex justify-between">
-                    <strong className="text-[#B0B0B0]">{review.name}</strong>
-                    <p className="text-[#B0B0B0]">
+                  <div className="flex justify-between mb-2">
+                    <strong>{review.name}</strong>
+                    <p className="text-gray-400">
                       {review.createdAt.substring(0, 10)}
                     </p>
                   </div>
 
-                  <p className="my-4">{review.comment}</p>
+                  <p className="my-4 text-gray-300">{review.comment}</p>
                   <Ratings value={review.rating} />
                 </div>
               ))}
@@ -141,7 +143,8 @@ const ProductTabs = ({
         )}
       </section>
 
-      <section>
+      {/* Related Products Section */}
+      <section className="flex-1">
         {activeTab === 3 && (
           <section className="ml-[4rem] flex flex-wrap">
             {!data ? (

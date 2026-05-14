@@ -5,13 +5,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-pantone-midnight text-white overflow-x-hidden font-sans">
       <ToastContainer />
+
+      {/* Navigation Bar */}
       <Navigation />
-      <main className="py-3">
+
+      {/* Main Content */}
+      <main className="flex-1 w-full">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 };
 

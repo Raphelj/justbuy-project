@@ -6,25 +6,31 @@ const CategoryForm = ({
   handleDelete,
 }) => {
   return (
-    <div className="p-3">
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="text"
-          className="py-3 px-4 border rounded-lg w-full"
-          placeholder="Write category name"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+    <div className="space-y-4">
+      <form onSubmit={handleSubmit}>
+        <div className="relative">
+          <input
+            type="text"
+            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white placeholder-gray-500 mb-4"
+            placeholder="Enter category name"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+        </div>
 
-        <div className="flex justify-between">
-          <button className="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 foucs:ring-pink-500 focus:ring-opacity-50">
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            className="flex-1 py-3 bg-primary hover:bg-yellow-400 text-black font-bold rounded-xl transition-all shadow-lg hover:shadow-primary/20"
+          >
             {buttonText}
           </button>
 
           {handleDelete && (
             <button
               onClick={handleDelete}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 foucs:ring-red-500 focus:ring-opacity-50"
+              type="button"
+              className="px-6 py-3 bg-white/5 hover:bg-red-600 border border-white/10 hover:border-red-600 text-white font-bold rounded-xl transition-all"
             >
               Delete
             </button>

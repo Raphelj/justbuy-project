@@ -10,6 +10,7 @@ import {
 } from "../redux/features/shop/shopSlice";
 import Loader from "../components/Loader";
 import ProductCard from "./Products/ProductCard";
+import { FaFilter, FaRedo } from "react-icons/fa";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -34,17 +35,11 @@ const Shop = () => {
   useEffect(() => {
     if (!checked.length || !radio.length) {
       if (!filteredProductsQuery.isLoading) {
-        // Filter products based on both checked categories and price filter
         const filteredProducts = filteredProductsQuery.data.filter(
-          (product) => {
-            // Check if the product price includes the entered price filter value
-            return (
-              product.price.toString().includes(priceFilter) ||
-              product.price === parseInt(priceFilter, 10)
-            );
-          }
+          (product) =>
+            product.price.toString().includes(priceFilter) ||
+            product.price === parseInt(priceFilter, 10)
         );
-
         dispatch(setProducts(filteredProducts));
       }
     }
@@ -64,7 +59,6 @@ const Shop = () => {
     dispatch(setChecked(updatedChecked));
   };
 
-  // Add "All Brands" option to uniqueBrands
   const uniqueBrands = [
     ...Array.from(
       new Set(
@@ -76,107 +70,122 @@ const Shop = () => {
   ];
 
   const handlePriceChange = (e) => {
-    // Update the price filter state when the user types in the input filed
     setPriceFilter(e.target.value);
   };
 
   return (
-    <>
-      <div className="container mx-auto ml-[4%]">
-        <div className="flex md:flex-row">
-          <div className="bg-[#151515] p-3 mt-2 mb-2">
-            <h2 className="h4 text-center py-2 text-white bg-black rounded-full mb-2">
-              Filter by Categories
-            </h2>
+    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-12">
+      <div className="container mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-12">
 
-            <div className="p-5 w-[15rem]">
-              {categories?.map((c) => (
-                <div key={c._id} className="mb-2">
-                  <div className="flex ietms-center mr-4">
-                    <input
-                      type="checkbox"
-                      id="red-checkbox"
-                      onChange={(e) => handleCheck(e.target.checked, c._id)}
-                      className="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
+        {/* Sidebar / Filters */}
+        <div className="lg:w-1/4">
+          <div className="bg-[#111] p-6 rounded-3xl border border-white/5 shadow-xl sticky top-24">
+            <div className="flex items-center gap-2 mb-8 pb-4 border-b border-white/10">
+              <FaFilter className="text-primary" />
+              <h2 className="text-xl font-heading font-bold text-white">Filters</h2>
+            </div>
 
-                    <label
-                      htmlFor="pink-checkbox"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
-                    >
+            {/* Categories */}
+            <div className="mb-8">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Categories</h3>
+              <div className="space-y-3">
+                {categories?.map((c) => (
+                  <label key={c._id} className="flex items-center cursor-pointer group">
+                    <div className="relative flex items-center">
+                      <input
+                        type="checkbox"
+                        onChange={(e) => handleCheck(e.target.checked, c._id)}
+                        className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/20 bg-black/50 transition-all checked:border-primary checked:bg-primary"
+                      />
+                      <svg
+                        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity peer-checked:opacity-100 text-black"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <span className="ml-3 text-gray-300 group-hover:text-white transition-colors capitalize font-medium">
                       {c.name}
-                    </label>
-                  </div>
-                </div>
-              ))}
+                    </span>
+                  </label>
+                ))}
+              </div>
             </div>
 
-            <h2 className="h4 text-center py-2 text-white bg-black rounded-full mb-2">
-              Filter by Brands
-            </h2>
-
-            <div className="p-5">
-              {uniqueBrands?.map((brand) => (
-                  <div key={brand} className="flex items-enter mr-4 mb-5">
-                    <input
-                      type="radio"
-                      id={brand}
-                      name="brand"
-                      onChange={() => handleBrandClick(brand)}
-                      className="w-4 h-4 text-pink-400 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-
-                    <label
-                      htmlFor="pink-radio"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
-                    >
+            {/* Brands */}
+            <div className="mb-8">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Brands</h3>
+              <div className="space-y-3">
+                {uniqueBrands?.map((brand) => (
+                  <label key={brand} className="flex items-center cursor-pointer group">
+                    <div className="relative flex items-center">
+                      <input
+                        type="radio"
+                        name="brand"
+                        id={brand}
+                        onChange={() => handleBrandClick(brand)}
+                        className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-white/20 bg-black/50 transition-all checked:border-primary checked:bg-primary"
+                      />
+                      <div className="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black opacity-0 transition-opacity peer-checked:opacity-100"></div>
+                    </div>
+                    <span className="ml-3 text-gray-300 group-hover:text-white transition-colors font-medium">
                       {brand}
-                    </label>
-                  </div>
-              ))}
+                    </span>
+                  </label>
+                ))}
+              </div>
             </div>
 
-            <h2 className="h4 text-center text-white py-2 bg-black rounded-full mb-2">
-              Filer by Price
-            </h2>
-
-            <div className="p-5 w-[15rem]">
+            {/* Price */}
+            <div className="mb-8">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Price</h3>
               <input
                 type="text"
                 placeholder="Enter Price"
                 value={priceFilter}
                 onChange={handlePriceChange}
-                className="w-full px-3 py-2 text-white placeholder-gray-400 border rounded-lg focus:outline-none focus:ring focus:border-pink-300"
+                className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all text-white placeholder-gray-500"
               />
             </div>
 
-            <div className="p-5 pt-0">
-              <button
-                className="w-full border my-4 text-white"
-                onClick={() => window.location.reload()}
-              >
-                Reset
-              </button>
-            </div>
-          </div>
-
-          <div className="p-3">
-            <h2 className="h4 text-center mb-2">{products?.length} Products</h2>
-            <div className="flex flex-wrap">
-              {products.length === 0 ? (
-                <Loader />
-              ) : (
-                products?.map((p) => (
-                  <div className="p-3" key={p._id}>
-                    <ProductCard p={p} />
-                  </div>
-                ))
-              )}
-            </div>
+            {/* Reset */}
+            <button
+              onClick={() => window.location.reload()}
+              className="w-full py-3 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl border border-white/10 transition-all flex items-center justify-center gap-2"
+            >
+              <FaRedo size={14} /> Reset Filters
+            </button>
           </div>
         </div>
+
+        {/* Product Grid */}
+        <div className="flex-1">
+          <div className="flex justify-between items-end mb-8">
+            <h1 className="text-3xl font-heading font-bold text-white">Full Catalog</h1>
+            <span className="text-gray-400 font-medium bg-white/5 px-4 py-1 rounded-full border border-white/5">{products?.length} Items Found</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products?.length === 0 ? (
+              <div className="col-span-full h-64 flex items-center justify-center">
+                <Loader />
+              </div>
+            ) : (
+              products?.map((p) => (
+                <div key={p._id} className="flex justify-center">
+                  <ProductCard p={p} />
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import { FaHeart, FaRegHeart, FaVaadin } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addToFavorites,
   removeFromFavorites,
   setFavorites,
 } from "../../redux/features/favourites/favouriteSlice";
-
 import {
   addFavoriteToLocalStorage,
   getFavoritesFromLocalStorage,
@@ -21,29 +20,29 @@ const HeartIcon = ({ product }) => {
   useEffect(() => {
     const favoritesFromLocalStorage = getFavoritesFromLocalStorage();
     dispatch(setFavorites(favoritesFromLocalStorage));
-  }, []);
+  }, [dispatch]);
 
-  const toggleFavorites = () => {
+  const toggleFavorites = (e) => {
+    e.stopPropagation(); // Prevent navigating to product details when clicking heart
     if (isFavorite) {
       dispatch(removeFromFavorites(product));
-      // remove the product from the localStorage as well
       removeFavoriteFromLocalStorage(product._id);
     } else {
       dispatch(addToFavorites(product));
-      // add the product to localStorage as well
       addFavoriteToLocalStorage(product);
     }
   };
 
   return (
     <div
-      className="absolute top-2 right-5 cursor-pointer"
+      className="absolute top-3 right-3 cursor-pointer z-20 p-2 rounded-full bg-black/20 backdrop-blur-md hover:bg-white/10 transition-all duration-300 group"
       onClick={toggleFavorites}
+      title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
     >
       {isFavorite ? (
-        <FaHeart className="text-pink-500" />
+        <FaHeart className="text-primary drop-shadow-md transform group-hover:scale-110 transition-transform" size={20} />
       ) : (
-        <FaRegHeart className="text-black" />
+        <FaRegHeart className="text-white drop-shadow-md transform group-hover:scale-110 transition-transform" size={20} />
       )}
     </div>
   );

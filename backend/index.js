@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import dns from 'dns';
 
 import connectDB from './config/db.js'
 import userRoutes from './routes/userRoutes.js'
@@ -11,11 +12,14 @@ import uploadRoutes from './routes/uploadRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 
 dotenv.config()
+// Force DNS to use Google Public DNS to resolve MongoDB SRV records
+// This bypasses local ISP blocking (common with Jio/JioFi)
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 const port = process.env.PORT || 5000
 
 connectDB();
 
-const app=express()
+const app = express()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,8 +30,8 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use('/api/uploads', uploadRoutes);
 app.use('/api/orders', orderRoutes);
-app.get('/api/config/paypal',(req,res)=>{
-    res.send({clientId:process.env.PAYPAL_CLIENT_ID})
+app.get('/api/config/paypal', (req, res) => {
+    res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
 })
 
 const __dirname = path.resolve();

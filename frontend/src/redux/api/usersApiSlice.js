@@ -29,7 +29,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-    }), 
+    }),
     getUsers: builder.query({
       query: () => ({
         url: USERS_URL,
@@ -54,10 +54,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/${data.userId}`,
         method: "PUT",
         body: data,
+        invalidatesTags: ["User"],
       }),
-      invalidatesTags: ["User"],
-    }), 
-   }),
+    }),
+
+    getUsersCount: builder.query({
+      query: () => `${USERS_URL}/total-users`,
+    }),
+  }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useProfileMutation, useGetUsersQuery, useDeleteUserMutation, useUpdateUserMutation, useGetUserDetailsQuery } = userApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useProfileMutation, useGetUsersQuery, useDeleteUserMutation, useUpdateUserMutation, useGetUserDetailsQuery, useGetUsersCountQuery } = userApiSlice;

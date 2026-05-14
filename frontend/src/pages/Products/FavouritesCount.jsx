@@ -5,9 +5,9 @@ const FavoritesCount = () => {
   const favoriteCount = favorites.length;
 
   return (
-    <div className="absolute left-2 top-8">
+    <div className="absolute -top-1 -right-2 pointer-events-none">
       {favoriteCount > 0 && (
-        <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
+        <span className="flex items-center justify-center w-5 h-5 text-[10px] font-bold text-black bg-primary rounded-full shadow-lg border border-black/20 animate-pulse">
           {favoriteCount}
         </span>
       )}

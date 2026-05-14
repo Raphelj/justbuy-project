@@ -6,7 +6,8 @@ import {
 } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
-import AdminMenu from "./AdminMenu";
+
+import { FaPlus, FaCloudUploadAlt, FaBoxOpen } from "react-icons/fa";
 
 const ProductList = () => {
   const [image, setImage] = useState("");
@@ -44,7 +45,7 @@ const ProductList = () => {
         toast.error("Product create failed. Try Again.");
       } else {
         toast.success(`${data.name} is created`);
-        navigate("/");
+        navigate("/admin/allproductslist");
       }
     } catch (error) {
       console.error(error);
@@ -67,121 +68,136 @@ const ProductList = () => {
   };
 
   return (
-    <div className="container xl:mx-[9rem] sm:mx-[0]">
-      <div className="flex flex-col md:flex-row">
-        <AdminMenu />
-        <div className="md:w-3/4 p-3">
-          <div className="h-12">Create Product</div>
+    <div className="min-h-screen bg-[#050505] text-white">
+      <div className="p-8 md:p-12">
+        <div className="max-w-5xl mx-auto">
+          <h1 className="text-3xl font-heading font-black text-white mb-8 flex items-center gap-3">
+            <span className="p-3 rounded-full bg-white/5 text-primary"><FaPlus size={24} /></span> Create Product
+          </h1>
 
-          {imageUrl && (
-            <div className="text-center">
-              <img
-                src={imageUrl}
-                alt="product"
-                className="block mx-auto max-h-[200px]"
-              />
-            </div>
-          )}
+          <div className="bg-[#111] border border-white/5 rounded-3xl p-8 shadow-xl">
+            <form onSubmit={handleSubmit} className="space-y-8">
 
-          <div className="mb-3">
-            <label className="border text-black px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
-              {image ? image.name : "Upload Image"}
-
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={uploadFileHandler}
-                className={!image ? "hidden" : "text-black"}
-              />
-            </label>
-          </div>
-
-          <div className="p-3">
-            <div className="flex flex-wrap">
-              <div className="one">
-                <label htmlFor="name">Name</label> <br />
-                <input
-                  type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#f2f2f4] text-black"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="two ml-10 ">
-                <label htmlFor="name block">Price</label> <br />
-                <input
-                  type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#f2f2f4] text-black"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex flex-wrap">
-              <div className="one">
-                <label htmlFor="name block">Quantity</label> <br />
-                <input
-                  type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#f2f2f4] text-black"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-              </div>
-              <div className="two ml-10 ">
-                <label htmlFor="name block">Brand</label> <br />
-                <input
-                  type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#f2f2f4] text-black"
-                  value={brand}
-                  onChange={(e) => setBrand(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <label htmlFor="" className="my-5">
-              Description
-            </label>
-            <textarea
-              type="text"
-              className="p-2 mb-3 bg-[#f2f2f4] border rounded-lg w-[95%] text-black"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-
-            <div className="flex justify-between">
-              <div>
-                <label htmlFor="name block">Count In Stock</label> <br />
-                <input
-                  type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#f2f2f4] text-black"
-                  value={stock}
-                  onChange={(e) => setStock(e.target.value)}
-                />
+              {/* Image Upload */}
+              <div className="flex flex-col items-center justify-center">
+                {imageUrl && (
+                  <div className="mb-4 relative group">
+                    <img
+                      src={imageUrl}
+                      alt="product"
+                      className="w-48 h-48 object-cover rounded-2xl shadow-lg border border-white/10"
+                    />
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center">
+                      <p className="text-white font-bold text-sm">Preview</p>
+                    </div>
+                  </div>
+                )}
+                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-primary rounded-2xl cursor-pointer bg-white/5 hover:bg-white/10 transition-all">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <FaCloudUploadAlt className="text-3xl text-gray-400 mb-2" />
+                    <p className="text-sm text-gray-400">Click to upload product image</p>
+                  </div>
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={uploadFileHandler}
+                    className="hidden"
+                  />
+                </label>
               </div>
 
-              <div>
-                <label htmlFor="">Category</label> <br />
-                <select
-                  placeholder="Choose Category"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#f2f2f4] text-black"
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  {categories?.map((c) => (
-                    <option key={c._id} value={c._id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">Name</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white placeholder-gray-600"
+                    placeholder="Product Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">Price ($)</label>
+                  <input
+                    type="number"
+                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white placeholder-gray-600"
+                    placeholder="0.00"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                </div>
               </div>
-            </div>
 
-            <button
-              onClick={handleSubmit}
-              className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-pink-600"
-            >
-              Submit
-            </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">Quantity</label>
+                  <input
+                    type="number"
+                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white placeholder-gray-600"
+                    placeholder="1"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">Brand</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white placeholder-gray-600"
+                    placeholder="Brand Name"
+                    value={brand}
+                    onChange={(e) => setBrand(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400">Description</label>
+                <textarea
+                  rows="4"
+                  className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white placeholder-gray-600 resize-none"
+                  placeholder="Product Description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">Count In Stock</label>
+                  <input
+                    type="number"
+                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white placeholder-gray-600"
+                    placeholder="0"
+                    value={stock}
+                    onChange={(e) => setStock(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-400">Category</label>
+                  <select
+                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl focus:border-primary focus:outline-none transition-colors text-white cursor-pointer"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    <option value="" className="bg-[#111]">Select Category</option>
+                    {categories?.map((c) => (
+                      <option key={c._id} value={c._id} className="bg-[#111]">{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-4 bg-primary hover:bg-yellow-400 text-black font-bold rounded-xl transition-all shadow-lg hover:shadow-primary/20 text-lg uppercase tracking-widest mt-4"
+              >
+                Submit Product
+              </button>
+
+            </form>
           </div>
         </div>
       </div>
