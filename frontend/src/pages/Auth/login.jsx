@@ -61,12 +61,13 @@ const Login = () => {
             <label htmlFor="password" className="block text-sm font-medium text-gray-300">
               Password
             </label>
-            <Link
-              to="/forgot-password"
-              className="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors"
+            <button
+              type="button"
+              onClick={() => toast.info("Please contact support to reset your password.")}
+              className="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors cursor-pointer"
             >
               Forgot password?
-            </Link>
+            </button>
           </div>
           <input
             type="password"

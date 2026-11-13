@@ -79,7 +79,7 @@ const AdminDashboard = () => {
     const isLoading = loadingSales || loadingCustomers || loadingProducts || loadingOrders;
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white p-18">
+        <div className="min-h-screen bg-[#050505] text-white pt-24 pb-12 px-6 lg:px-12">
             <section className="max-w-7xl mx-auto">
                 <h1 className="text-3xl font-bold mb-8 text-white">Dashboard</h1>
 

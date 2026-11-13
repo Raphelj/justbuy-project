@@ -75,9 +75,9 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white pb-20 overflow-x-hidden">
+    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-20 overflow-x-hidden">
       {/* Back Button */}
-      <div className="container mx-auto px-6 lg:px-12 pt-8">
+      <div className="container mx-auto px-6 lg:px-12">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-medium uppercase tracking-wider"
@@ -136,7 +136,7 @@ const ProductDetails = () => {
                 </p>
 
                 <div className="flex items-end gap-4 mb-8">
-                  <span className="text-4xl font-bold text-white">₹{product.price}</span>
+                  <span className="text-4xl font-bold text-white">${product.price}</span>
                   {product.countInStock > 0 ? (
                     <span className="text-green-400 text-sm font-medium mb-2 bg-green-400/10 px-3 py-1 rounded-full">In Stock</span>
                   ) : (
@@ -175,7 +175,7 @@ const ProductDetails = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <FaClock className="text-primary" />
-                    <span>Listed: <span className="text-white">{moment(product.createAt).fromNow()}</span></span>
+                    <span>Listed: <span className="text-white">{moment(product.createdAt).fromNow()}</span></span>
                   </div>
                   <div className="flex items-center gap-3">
                     <FaBox className="text-primary" />

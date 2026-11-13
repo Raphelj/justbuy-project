@@ -9,9 +9,8 @@ const OrderList = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <div className="p-8 md:p-12">
-        <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-12 px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-heading font-black text-white flex items-center gap-3">
               <span className="p-3 rounded-full bg-white/5 text-primary"><FaClipboardList size={24} /></span> Manage Orders
@@ -120,7 +119,6 @@ const OrderList = () => {
           )}
         </div>
       </div>
-    </div>
   );
 };
 

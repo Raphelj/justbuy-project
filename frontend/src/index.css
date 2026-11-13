@@ -28,8 +28,11 @@ body {
   color: var(--color-secondary);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  selection-background-color: var(--color-primary);
-  selection-color: black;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: black;
 }
 
 h1,

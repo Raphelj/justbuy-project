@@ -70,11 +70,9 @@ const Navigation = () => {
           <div className="flex items-center space-x-6 text-gray-300">
 
             {/* Favorites */}
-            <Link to="/favorite" className="hover:text-primary transition-transform hover:scale-110 relative group">
+            <Link to="/favorite" className="hover:text-primary transition-transform hover:scale-110 relative">
               <AiOutlineHeart size={24} />
-              <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <FavouritesCount />
-              </div>
+              <FavouritesCount />
             </Link>
 
             {/* Cart */}

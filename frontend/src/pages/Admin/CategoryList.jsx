@@ -91,9 +91,8 @@ const CategoryList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <div className="p-8 md:p-12">
-        <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-12 px-6 lg:px-12">
+      <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <h1 className="text-3xl font-heading font-black text-white flex items-center gap-3">
               <span className="p-3 rounded-full bg-white/5 text-primary"><FaTags size={24} /></span> Manage Categories
@@ -158,7 +157,6 @@ const CategoryList = () => {
           </Modal>
         </div>
       </div>
-    </div>
   );
 };
 

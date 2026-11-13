@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-pantone-midnight text-white overflow-x-hidden font-sans">
+    <div className="min-h-screen flex flex-col bg-[#0A0A0A] text-white overflow-x-hidden font-sans">
       <ToastContainer />
 
       {/* Navigation Bar */}

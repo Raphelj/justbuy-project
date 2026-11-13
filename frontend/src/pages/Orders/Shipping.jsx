@@ -38,7 +38,7 @@ const Shipping = () => {
   }, [navigate, shippingAddress]);
 
   return (
-    <div className="min-h-screen bg-black text-gray-100 ml-20 p-6 md:p-8">
+    <div className="min-h-screen bg-[#050505] text-gray-100 pt-24 pb-12 px-6">
       <div className="max-w-4xl mx-auto">
         {/* Progress Steps */}
         <div className="mb-12">

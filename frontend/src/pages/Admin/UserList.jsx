@@ -57,9 +57,8 @@ const UserList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <div className="p-8 md:p-12"> {/* Added padding-left for AdminMenu clearance if needed, or just standard padding */}
-        <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-12 px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-heading font-black text-white mb-8 flex items-center gap-3">
             <span className="p-3 rounded-full bg-white/5 text-primary"><FaUsers size={24} /></span> Manage Users
           </h1>
@@ -183,7 +182,6 @@ const UserList = () => {
           )}
         </div>
       </div>
-    </div>
   );
 };
 

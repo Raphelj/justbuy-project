@@ -40,7 +40,7 @@ const PlaceOrder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white pt-10 pb-20 px-6">
+    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-20 px-6">
       <ProgressSteps step1 step2 step3 />
 
       <div className="container mx-auto max-w-7xl mt-12">

@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useGetTopProductsQuery } from "../../redux/api/productApiSlice";
 import { Link } from "react-router-dom";
 import Message from "../../components/Message";
@@ -5,21 +6,22 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
-import { FaStar, FaArrowRight, FaShoppingBag } from "react-icons/fa";
+import { FaStar, FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
+  const sliderRef = useRef(null);
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 1200,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
     autoplay: true,
     autoplaySpeed: 6000,
-    pauseOnHover: false,
+    pauseOnHover: true,
     fade: true,
     cssEase: "cubic-bezier(0.25, 1, 0.5, 1)",
   };
@@ -37,9 +39,9 @@ const ProductCarousel = () => {
   }
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <Slider {...settings} className="hero-slider">
-        {products.map((product) => (
+    <div className="relative w-full overflow-hidden group">
+      <Slider ref={sliderRef} {...settings} className="hero-slider">
+        {products?.map((product) => (
           <div key={product._id} className="relative w-full h-[85vh] min-h-[600px] outline-none">
 
             {/* Background Image with Overlay */}
@@ -53,9 +55,9 @@ const ProductCarousel = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-90" />
             </div>
 
-            {/* Content Content */}
+            {/* Content */}
             <div className="absolute inset-0 flex items-center">
-              <div className="container mx-auto px-6 lg:px-12">
+              <div className="container mx-auto px-12 sm:px-16 md:px-20 lg:px-24">
                 <div className="max-w-3xl transform translate-y-8 animate-fade-in-up">
 
                   {/* Badge */}
@@ -65,22 +67,30 @@ const ProductCarousel = () => {
                   </div>
 
                   {/* Brand */}
-                  <h3 className="text-primary font-heading font-bold text-lg tracking-[0.2em] uppercase mb-2">
+                  <h3 className="text-primary font-heading font-bold text-sm md:text-base tracking-[0.2em] uppercase mb-2">
                     {product.brand}
                   </h3>
 
                   {/* Title */}
-                  <h1 className="text-5xl md:text-7xl font-sans font-black text-white leading-tight mb-6 drop-shadow-2xl">
+                  <h1
+                    className="text-2xl sm:text-3xl md:text-4xl font-sans font-black text-white leading-tight mb-4 drop-shadow-2xl truncate block max-w-full"
+                    title={product.name}
+                  >
                     {product.name}
                   </h1>
 
-                  {/* Description */}
-                  <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed mb-8 max-w-xl line-clamp-3">
-                    {product.description}
+                  {/* Description / Details */}
+                  <p
+                    className="text-gray-300 text-sm md:text-base font-light leading-relaxed mb-6 max-w-xl"
+                    title={product.description}
+                  >
+                    {product.description?.length > 140
+                      ? `${product.description.substring(0, 140).trim()}....`
+                      : product.description}
                   </p>
 
                   {/* Rating & Stats */}
-                  <div className="flex items-center gap-6 mb-10 text-white/80">
+                  <div className="flex items-center gap-6 mb-8 text-white/80 text-sm">
                     <div className="flex items-center gap-1">
                       <FaStar className="text-primary" />
                       <span className="font-bold text-white">{product.rating}</span>
@@ -94,7 +104,7 @@ const ProductCarousel = () => {
                   {/* Price & CTA */}
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
                     <div className="flex items-baseline gap-3">
-                      <span className="text-5xl font-bold text-white">
+                      <span className="text-4xl md:text-5xl font-bold text-white">
                         ${product.price}
                       </span>
                       {product.price > 100 && (
@@ -129,6 +139,29 @@ const ProductCarousel = () => {
           </div>
         ))}
       </Slider>
+
+      {/* Navigation Arrows for Sliding Left / Right */}
+      {products?.length > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={() => sliderRef.current?.slickPrev()}
+            className="absolute left-3 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full bg-black/40 hover:bg-black/75 border border-white/20 hover:border-primary text-white hover:text-primary flex items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 shadow-2xl focus:outline-none"
+            aria-label="Slide Left"
+          >
+            <FaChevronLeft className="text-lg md:text-xl -translate-x-0.5" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => sliderRef.current?.slickNext()}
+            className="absolute right-3 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full bg-black/40 hover:bg-black/75 border border-white/20 hover:border-primary text-white hover:text-primary flex items-center justify-center transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-110 shadow-2xl focus:outline-none"
+            aria-label="Slide Right"
+          >
+            <FaChevronRight className="text-lg md:text-xl translate-x-0.5" />
+          </button>
+        </>
+      )}
 
       {/* Custom Styles for Dots */}
       <style>{`

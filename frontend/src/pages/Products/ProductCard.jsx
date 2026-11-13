@@ -79,8 +79,10 @@ const ProductCard = ({ p }) => {
           </div>
         </div>
 
-        <p className="text-gray-400 text-sm mb-4 line-clamp-2 min-h-[40px]">
-          {p?.description?.substring(0, 60)}...
+        <p className="text-gray-400 text-sm mb-4 line-clamp-2 min-h-[40px]" title={p?.description}>
+          {p?.description?.length > 60
+            ? `${p.description.substring(0, 60).trim()}...`
+            : p?.description}
         </p>
 
         <div className="flex justify-between items-center pt-4 border-t border-white/10">
@@ -94,7 +96,7 @@ const ProductCard = ({ p }) => {
           <button
             onClick={() => addToCartHandler(p, 1)}
             disabled={p.countInStock === 0}
-            className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors disable:opacity-50"
+            className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {p.countInStock > 0 ? 'Add to Cart' : 'Out of Stock'}
           </button>

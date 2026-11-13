@@ -21,11 +21,7 @@ const AuthLayout = ({ title, children }) => {
       </div>
 
       {/* Right Side - Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 sm:p-12 lg:p-24 bg-black relative">
-        <div className="absolute top-0 right-0 p-8 lg:hidden">
-          <h1 className="text-2xl font-bold text-yellow-500">JusBuy</h1>
-        </div>
-
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 sm:p-12 lg:p-24 pt-24 sm:pt-28 lg:pt-24 bg-black relative">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center lg:text-left">
             <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-white mb-2">
