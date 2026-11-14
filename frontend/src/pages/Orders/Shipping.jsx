@@ -7,7 +7,7 @@ import {
 } from "../../redux/features/cart/cartSlice";
 import ProgressSteps from "../../components/ProgressSteps";
 
-const Shipping = () => {  
+const Shipping = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
@@ -157,7 +157,7 @@ const Shipping = () => {
                     Payment Method
                   </span>
                 </label>
-                
+
                 <div className="space-y-3">
                   <label className="flex items-center p-4 rounded-xl bg-black/40 border border-yellow-500/30 cursor-pointer hover:border-yellow-400 transition-all group">
                     <input
@@ -170,7 +170,7 @@ const Shipping = () => {
                     />
                     <span className="ml-3 text-gray-200 group-hover:text-yellow-400 transition-colors flex items-center">
                       <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.032.17a.804.804 0 01-.794.679H7.72a.483.483 0 01-.477-.558L7.418 21h1.518l.95-6.02h1.385c4.678 0 7.75-2.203 8.796-6.502zm-2.96-5.09c.762.868.983 2.156.66 3.825-.682 3.52-2.913 4.808-5.817 4.808h-.446c-.41 0-.76.294-.82.697L9.93 17.13H7.793c-.415 0-.752-.323-.745-.738l1.322-8.406c.049-.32.326-.561.647-.561h3.755c1.878 0 3.197-.487 3.913-1.45.233-.313.415-.652.544-1.017.127-.364.199-.753.215-1.163.007-.17.006-.337-.005-.503-.01-.163-.028-.323-.055-.48z"/>
+                        <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.032.17a.804.804 0 01-.794.679H7.72a.483.483 0 01-.477-.558L7.418 21h1.518l.95-6.02h1.385c4.678 0 7.75-2.203 8.796-6.502zm-2.96-5.09c.762.868.983 2.156.66 3.825-.682 3.52-2.913 4.808-5.817 4.808h-.446c-.41 0-.76.294-.82.697L9.93 17.13H7.793c-.415 0-.752-.323-.745-.738l1.322-8.406c.049-.32.326-.561.647-.561h3.755c1.878 0 3.197-.487 3.913-1.45.233-.313.415-.652.544-1.017.127-.364.199-.753.215-1.163.007-.17.006-.337-.005-.503-.01-.163-.028-.323-.055-.48z" />
                       </svg>
                       PayPal or Credit Card
                     </span>
