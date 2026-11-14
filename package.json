@@ -11,8 +11,8 @@
     "build": "npm install && npm install --prefix frontend --include=dev && npm run build --prefix frontend"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Raphel Johnson",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",
